@@ -171,45 +171,9 @@ class GpsTest(App):
                                             mode="driving",
                                             departure_time=now)
 
-        #converts the results into a string for later sifting
-        directions_result = str(directions_result)
-
-        
-
-
-        # reads the words and splits them into different entries based on a " ' "
-        # appends each subdivided entry to the list
-        for word in directions_result.split("'"):
-            words.append(word)
-
-        #logic for finding the terms after the key words distance and duration
-        cyclewords = cycle(words)
-        nextword = next(cyclewords)
-
-        #while loop to skip past the key words distance and duration and get the entry 4 steps ahead of the key words
-        #A very crude way to look at a JSON file but I will update this in the future with an effective way of
-        #looking at JSON
-        #Basically converts the JSON to a str then divides the string based on a split of an apostrophe then adds that to an
-        # empty list which is cycled through the cycle loop here
-        while running:
-            thisword, nextword = nextword, next(cyclewords)
-            if nextword == "distance":
-                for i in range(5):
-                    if i != 4:
-                        nextword = next(cyclewords)
-                    else:
-                        dis = nextword
-            if nextword == "duration":
-                for i in range(5):
-                    if i != 4:
-                        nextword = next(cyclewords)
-
-                    else:
-                        eta = nextword
-
-        
-                break #breaks the loop once the filter is finished
-
+        #defines the distance and duration from the data of the gmaps api
+        dis = directions_result[0]["legs"][0]['distance']['text']
+        eta = directions_result[0]["legs"][0]['duration_in_traffic']['text']
         
         #sends the discord message with the correct parameters    
         payload = {
