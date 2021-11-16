@@ -12,7 +12,6 @@ from kivy.clock import Clock
 from datetime import datetime
 from dotenv import load_dotenv
 import requests
-import time
 import googlemaps
 import os
 
